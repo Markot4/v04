@@ -2,58 +2,69 @@
 #include <string>
 #include <memory>
 
-namespace vsite::oop::v4 {
+namespace vsite::oop::v4
+{
+	class animal
+	{
+	public:
+		virtual std::string species() const = 0;
+		virtual unsigned int legs() const = 0;
+		virtual ~animal() = default;
 
-    // Apstraktna baza klasa animal
-    class animal {
-    public:
-        virtual ~animal() = default;
-        virtual std::string species() const = 0;
-        virtual unsigned legs() const = 0;
-    };
+	private:
+	};
 
-    // Apstraktna klasa insect izvedena iz animal
-    class insect : public animal {};
+	class insect : public animal
+	{
+	public:
+		unsigned int legs() const override;
 
-    // Konkretna klasa cockroach izvedena iz insect
-    class cockroach : public insect {
-    public:
-        std::string species() const override { return "cockroach"; }
-        unsigned legs() const override { return 6; }
-    };
+	};
 
-    // Apstraktna klasa spider izvedena iz animal
-    class spider : public animal {};
+	class cockroach : public insect
+	{
+	public:
+		std::string species() const override;
 
-    // Konkretna klasa tarantula izvedena iz spider
-    class tarantula : public spider {
-    public:
-        std::string species() const override { return "tarantula"; }
-        unsigned legs() const override { return 8; }
-    };
+	};
 
-    // Apstraktna klasa bird izvedena iz animal
-    class bird : public animal {};
+	class spider : public animal
+	{
+	public:
+		unsigned int legs() const override;
 
-    // Konkretna klasa sparrow izvedena iz bird
-    class sparrow : public bird {
-    public:
-        std::string species() const override { return "sparrow"; }
-        unsigned legs() const override { return 2; }
-    };
+	};
 
-    // Klasa leg_counter za brojanje nogu
-    class leg_counter {
-        unsigned total_legs = 0;
-    public:
-        std::string add_animal(animal* a) {
-            total_legs += a->legs();
-            return a->species();
-        }
-        unsigned legs() const { return total_legs; }
-    };
+	class tarantula : public spider
+	{
+	public:
+		std::string species() const override;
 
-    // Fabrika za kreiranje životinja na osnovu šifre
-    std::unique_ptr<animal> animal_factory(int code);
+	};
 
-} // namespace vsite::oop::v4
+	class bird : public animal
+	{
+	public:
+		unsigned int legs() const override;
+	};
+
+	class sparrow : public bird
+	{
+	public:
+		std::string species() const override;
+
+	};
+
+	class leg_counter
+	{
+	public:
+		std::string add_animal(animal*);
+
+		unsigned int legs();
+
+	private:
+		unsigned int legCnt = 0;
+	};
+
+	std::unique_ptr<animal> animal_factory(int index);
+}

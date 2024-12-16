@@ -1,30 +1,34 @@
 #include "app.h"
 #include <iostream>
 
-using namespace vsite::oop::v4;
+#include "app.h"
+#include "iostream"
 
-int main() {
-    leg_counter lc;
-    int code;
+// read animal id's (until 0) and display species name
+// display total leg count
+int main()
+{
+	vsite::oop::v4::leg_counter counter;
+	int index;
+	while (true)
+	{
+		std::cout << "Broj zivotinje: ";
+		std::cin >> index;
 
-    // Unos šifri životinja sve dok se ne unese 0
-    while (true) {
-        std::cout << "Enter animal code (1=cockroach, 2=sparrow, 3=tarantula, 0=stop): ";
-        std::cin >> code;
-        if (code == 0) break;
+		if (index < 0 && index > 3)
+		{
+			std::cout << "Greska!" << std::endl;
+			break;
+		}
 
-        auto animal = animal_factory(code);
-        if (animal) {
-            std::cout << "Species: " << lc.add_animal(animal.get()) << '\n';
-        }
-        else {
-            std::cout << "Invalid code!\n";
-        }
-    }
+		if (index == 0)
+		{
+			std::cout << "Broj nogu: " << counter.legs() << std::endl;
+			break;
+		}
 
-    // Ispis ukupnog broja nogu
-    std::cout << "Total legs: " << lc.legs() << '\n';
-
-    return 0;
+		std::cout << "Vasa zivotinja je " <<
+			counter.add_animal(vsite::oop::v4::animal_factory(index).get()) <<
+			std::endl;
+	}
 }
-
